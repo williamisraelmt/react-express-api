@@ -3,7 +3,7 @@ import express, { Express, Request, Response } from "express";
 const app: Express = express();
 const port = 3000;
 
-app.get("/productos", (req: Request, res: Response) => {
+app.get("/arreglo", (req: Request, res: Response) => {
   const productos = [
     { id: 1, nombre: "Laptop", precio: 800 },
     { id: 2, nombre: "Teléfono", precio: 500 },
@@ -13,7 +13,7 @@ app.get("/productos", (req: Request, res: Response) => {
 });
 
 
-app.get("/random", (req: Request, res: Response) => {
+app.get("/numero", (req: Request, res: Response) => {
   const numero = Math.floor(Math.random() * 100);
   res.send({ numeroAleatorio: numero });
 });
