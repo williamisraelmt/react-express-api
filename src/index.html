@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller de informática</title>
+</head>
+<body>
+    <button id="cargarDatos">Cargar datos</button>
+    <div id="integer"></div>
+    <div id="string"></div>
+    <div id="boolean"></div>
+    <script>
+        document.getElementById("cargarDatos").addEventListener("click", () => {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:3000/integer", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("integer").textContent = "Response:" + response.integer;
+                }
+            }
+            xhr.send();
+        });
+
+        document.getElementById("cargarDatos").addEventListener("click", () => {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:3000/string", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("string").textContent = "Response:" + response.string;
+                }
+            }
+            xhr.send();
+        });
+
+        document.getElementById("cargarDatos").addEventListener("click", () => {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:3000/boolean", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("boolean").textContent = "Response:" + response.boolean;
+                }
+            }
+            xhr.send();
+        });
+    </script>
+</body>
+</html>
