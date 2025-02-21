@@ -6,6 +6,8 @@
   "author": "Williams M <williamisrael1601@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/cors": "^2.8.17",
+    "cors": "^2.8.5",
     "express": "^4.21.2"
   },
   "devDependencies": {

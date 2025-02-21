@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller Informática</title>
+</head>
+<body>
+<button id="loadData">Cargar</button>
+<div id="entero"></div>
+<div id="caracter"></div>
+<div id="boolean"></div>
+<div id="date"></div>
+
+<script>
+    document.getElementById("loadData").addEventListener("click", function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://localhost:4000/entero", true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                document.getElementById("entero").textContent = "Response: " + response.entero;
+            }
+        };
+        xhr.send();
+
+        var xhr2 = new XMLHttpRequest();
+        xhr2.open("GET", "http://localhost:4000/caracter", true);
+        xhr2.onreadystatechange = function () {
+            if (xhr2.readyState === 4 && xhr2.status === 200) {
+                var response = JSON.parse(xhr2.responseText);
+                document.getElementById("caracter").textContent = "Response: " + response.caracter;
+            }
+        };
+        xhr2.send();
+
+        var xhr3= new XMLHttpRequest();
+        xhr3.open("GET", "http://localhost:4000/boolean", true);
+        xhr3.onreadystatechange = function () {
+            if (xhr3.readyState === 4 && xhr3.status === 200) {
+                var response = JSON.parse(xhr3.responseText);
+                document.getElementById("boolean").textContent = "Response: " + response.boolean;
+            }
+        };
+        xhr3.send();
+
+        var xhr4 = new XMLHttpRequest();
+        xhr4.open("GET", "http://localhost:4000/date", true);
+        xhr4.onreadystatechange = function () {
+            if (xhr4.readyState === 4 && xhr4.status === 200) {
+                var response = JSON.parse(xhr4.responseText);
+                document.getElementById("date").textContent = "Response: " + response.date;
+            }
+        };
+        xhr4.send();
+
+    });
+    
+</script>
+</body>
+</html>

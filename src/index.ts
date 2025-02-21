@@ -1,16 +1,19 @@
 import express, { Express, Request, Response } from "express";
+import cors from "cors";
 
 const app: Express = express();
-const port = 3000;
+const port = 4000;
+
+app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
   res.send({"test" : "test"});
 });
 
-app.get("/entero", (Req: Request, res: Response) => { Response.send(1) });
-app.get("/caracter", (Req: Request, res: Response) => { Response.send('a') });
-app.get("/boolean", (Req: Request,res: Response) => { Response.send(true) });
-app.get("/date", (Req: Request, res: Response) => { Response.send('03/02/2025') });
+app.get("/entero", (req: Request, res: Response) => { res.send ({ entero: 8}) });
+app.get("/caracter", (req: Request, res: Response) => { res.send ({caracter:'a'}) });
+app.get("/boolean", (req: Request,res: Response) => { res.send({boolean: true}) });
+app.get("/date", (req: Request, res: Response) => { res.send({date:'03/02/2025'}) });
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
