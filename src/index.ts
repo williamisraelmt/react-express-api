@@ -33,18 +33,6 @@ app.get('/tasks/', async (req: Request, res: Response) => {
   const tasks = await Task.findAll()
   res.send({ data : tasks });
 });
-//
-// app.get("/entero", (req: Request, res: Response) => {
-//   res.send({ entero: 1 });
-// });
-//
-// app.get("/caracter", (req: Request, res: Response) => {
-//   res.send({ caracter: "a"});
-// });
-//
-// app.get("/caracteres", (req: Request, res: Response) => {
-//   res.send({caracteres :"prueba"});
-// });
 
 app.listen(port, () => {
   sequelize.sync().catch(console.error);
