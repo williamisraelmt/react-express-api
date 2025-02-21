@@ -1,12 +1,52 @@
 import express, { Express, Request, Response } from "express";
+import cors from "cors";
+import { Sequelize } from 'sequelize-typescript';
+import Task from "./task.model";
 
 const app: Express = express();
 const port = 3000;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send({"test" : "test"});
+app.use(cors<Request>());
+
+const sequelize = new Sequelize({
+  dialect: 'mysql',
+  database: 'test',
+  username: 'root',
+  password: 'root1234',
+  host: 'localhost',
+  port: 3306,
+  models: [Task],
+  define: {
+    underscored: true,
+  },
 });
 
+app.post('/tasks/', async (req: Request, res: Response) => {
+  await Task.create({
+    title: 'my title 1',
+    materia: 'naturales',
+  })
+  res.send({ msg : 'ok' });
+});
+
+app.get('/tasks/', async (req: Request, res: Response) => {
+  const tasks = await Task.findAll()
+  res.send({ data : tasks });
+});
+//
+// app.get("/entero", (req: Request, res: Response) => {
+//   res.send({ entero: 1 });
+// });
+//
+// app.get("/caracter", (req: Request, res: Response) => {
+//   res.send({ caracter: "a"});
+// });
+//
+// app.get("/caracteres", (req: Request, res: Response) => {
+//   res.send({caracteres :"prueba"});
+// });
+
 app.listen(port, () => {
+  sequelize.sync().catch(console.error);
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
