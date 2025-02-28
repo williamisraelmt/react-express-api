@@ -8,6 +8,8 @@ class Task extends Model {
     declare title: string;
     @Column
     declare materia: string;
+    @Column
+    declare numero: number;
 }
 
 export default Task;

@@ -11,6 +11,7 @@ module.exports = {
       },
       title: Sequelize.STRING,
       materia: Sequelize.STRING,
+      numero: Sequelize.INTEGER,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
     });

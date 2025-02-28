@@ -25,6 +25,7 @@ app.post('/tasks/', async (req: Request, res: Response) => {
   await Task.create({
     title: 'my title 1',
     materia: 'naturales',
+    numero: 32,
   })
   res.send({ msg : 'ok' });
 });
