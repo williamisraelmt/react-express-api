@@ -10,7 +10,7 @@ app.use(cors<Request>());
 
 const sequelize = new Sequelize({
   dialect: 'mysql',
-  database: 'test',
+  database: 'tareas',
   username: 'root',
   password: 'root1234',
   host: 'localhost',
@@ -23,15 +23,38 @@ const sequelize = new Sequelize({
 
 app.post('/tasks/', async (req: Request, res: Response) => {
   await Task.create({
-    title: 'my title 1',
-    materia: 'naturales',
+    description: 'blablablabla',
+    date: new Date(),
+    complete: true,
   })
-  res.send({ msg : 'ok' });
+  res.send({ msg : 'inserted' });
 });
 
 app.get('/tasks/', async (req: Request, res: Response) => {
   const tasks = await Task.findAll()
   res.send({ data : tasks });
+});
+
+app.get('/tasks/:id', async (req: Request, res: Response) => {
+  const tasks = await Task.findByPk(req.params.id)
+  res.send({ data : tasks });
+});
+
+app.put('/tasks/:id', async (req: Request, res: Response) => {
+  const tasks = await Task.update({
+    complete: false 
+   }, 
+   { 
+     where: { id: req.params.id } 
+   })
+ res.send({ msg : "actualizado" });
+});
+
+app.delete('/tasks/:id', async (req: Request, res: Response) => {
+  const tasks = await Task.destroy({
+    where: { id: req.params.id }
+  })
+  res.send({ msg : "eliminado" });
 });
 
 app.listen(port, () => {

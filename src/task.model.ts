@@ -5,9 +5,11 @@ import { Table, Column, Model, HasMany } from 'sequelize-typescript';
 })
 class Task extends Model {
     @Column
-    declare title: string;
+    declare description: string;
     @Column
-    declare materia: string;
+    declare date: Date;
+    @Column
+    declare complete: boolean;
 }
 
 export default Task;
