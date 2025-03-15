@@ -7,6 +7,7 @@ const app: Express = express();
 const port = 3000;
 
 app.use(cors<Request>());
+app.use(express.json()); 
 
 const sequelize = new Sequelize({
   dialect: 'mysql',
@@ -23,9 +24,9 @@ const sequelize = new Sequelize({
 
 app.post('/tasks/', async (req: Request, res: Response) => {
   await Task.create({
-    description: 'blablablabla',
-    date: new Date(),
-    complete: true,
+    description: req.body.description,
+    date: new Date(req.body.date),
+    complete: false,
   })
   res.send({ msg : 'inserted' });
 });

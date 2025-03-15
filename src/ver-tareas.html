@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de tareas</title>
+    <style>
+        #page {
+            text-align: center;
+        }
+     
+        .section {
+            margin: 10px;
+            border: 1px solid black;
+            border-radius: 10px;
+            width: 200px;
+            height: 300px;
+            display: inline-block;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .date {
+            font-weight: bold;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div id="page">
+        <h1>Gestor de tareas</h1>
+        <button id="load-tareas">Ver tareas</button>
+        <button id="load-specific-tareas">Ver tareas especificas</button> 
+        <input type="number" id="id-tarea" placeholder="id de la tarea">
+        <div id="resultados">
+
+        </div>
+    </div>
+    <script>
+        
+
+        document.getElementById("load-tareas").addEventListener("click", function () {
+            var xhr1 = new XMLHttpRequest();
+            xhr1.open("GET", "http://localhost:3000/tasks", true);
+            xhr1.onreadystatechange = function () {
+                if (xhr1.readyState === 4 && xhr1.status === 200) {
+                    var response = JSON.parse(xhr1.responseText);
+                    console.log(response);
+                    let tareas = "";
+                    for (let i = 0; i < response.data.length; i++) {
+                        tareas += 
+                        '<div class="section"> ' + 
+                            '<span id="' + response.data[i].id + '"></span>' + '<br>' +
+                            '<button class="' + response.data[i].id + '" id="eliminar">Eliminar</button>' + '<br>' +
+                            '<p class="date">' + response.data[i].date  + '</p>' + '<br>' +
+                            '<p class="description">' + response.data[i].description + '</p>' + '<br>' +
+                            '<p class="complete">' + response.data[i].complete + '</p>' + 
+                        '</div>';
+                        
+                    }
+                    document.getElementById("resultados").innerHTML = tareas;
+                    
+                }
+            };
+            xhr1.send();
+
+        });
+        
+
+        document.getElementById("resultados").addEventListener("click", function () {
+            if (event.target  && event.target.matches('button')){
+                const id = event.target.className;
+                const section = event.target.parentElement;
+                var xhr1 = new XMLHttpRequest();
+                xhr1.open("DELETE", "http://localhost:3000/tasks/" + id, true);
+                xhr1.onreadystatechange = function () {
+                    if (xhr1.readyState === 4 && xhr1.status === 200) {
+                        var response = JSON.parse(xhr1.responseText);
+                        console.log(response);
+                        section.remove();
+                    }
+                };
+                xhr1.send();
+            }
+        });
+        
+
+        document.getElementById("load-specific-tareas").addEventListener("click", function () {
+            const id = document.getElementById("id-tarea").value;
+            var xhr1 = new XMLHttpRequest();
+            xhr1.open("GET", "http://localhost:3000/tasks/" + id, true);
+            xhr1.onreadystatechange = function () {
+                if (xhr1.readyState === 4 && xhr1.status === 200) {
+                    var response = JSON.parse(xhr1.responseText);
+                    console.log(response);
+                    document.getElementById("resultados").innerHTML = 
+                    '<div class="section">' + 
+                        '<span id="' + response.data.id + '"></span>' + '<br>' +
+                        '<p class="date">' + response.data.date  + '</p>' + '<br>' +
+                        '<p class="description">' + response.data.description + '</p>' + '<br>' +
+                        '<p class="complete">' + response.data.complete + '</p>' + 
+                    '</div>';
+                }
+            };
+            xhr1.send();
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de tareas</title>
+</head>
+<body>
+    <div id="page">
+        <h1>Crear tarea</h1>
+        <input type="text" id="description" placeholder="Descripción">
+        <input type="date" id="date" placeholder="Fecha">
+        <button id="create-tarea">Crear tarea</button>
+        <div id="resultados"></div>
+    </div>
+    <script>
+        document.getElementById("create-tarea").addEventListener("click", function () {
+            const description = document.getElementById("description").value;
+            const date = document.getElementById("date").value;
+            var xhr1 = new XMLHttpRequest();
+            xhr1.open("POST", "http://localhost:3000/tasks/", true);
+            xhr1.setRequestHeader("Content-Type", "application/json");
+            xhr1.onreadystatechange = function () {
+                if (xhr1.readyState === 4 && xhr1.status === 200) {
+                    var response = JSON.parse(xhr1.responseText);
+                    console.log(response);
+                    document.getElementById("resultados").textContent = "Response: " + response.msg;
+                }
+            };
+            xhr1.send(JSON.stringify({ description, date }));
+        });
+    </script>
+</body>
+</html>
