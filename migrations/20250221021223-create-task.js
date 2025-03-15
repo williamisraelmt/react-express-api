@@ -9,10 +9,9 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      title: Sequelize.STRING,
-      materia: Sequelize.STRING,
-      created_at: Sequelize.DATE,
-      updated_at: Sequelize.DATE,
+      description: Sequelize.STRING,
+      date: Sequelize.DATE,
+      complete: Sequelize.BOOLEAN,
     });
     /**
      * Add altering commands here.
