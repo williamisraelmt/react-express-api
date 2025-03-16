@@ -57,6 +57,11 @@ app.delete('/tasks/:id', async (req: Request, res: Response) => {
   res.send({ msg : "eliminado" });
 });
 
+app.get("/entero", (Req: Request, res: Response) => { Response.send(1) });
+app.get("/caracter", (Req: Request, res: Response) => { Response.send('a') });
+app.get("/boolean", (Req: Request,res: Response) => { Response.send(true) });
+app.get("/date", (Req: Request, res: Response) => { Response.send('03/02/2025') });
+
 app.listen(port, () => {
   sequelize.sync().catch(console.error);
   console.log(`[server]: Server is running at http://localhost:${port}`);
