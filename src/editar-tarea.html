@@ -1,58 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de tareas</title>
+    <!--<style>
+        #page {
+            text-align: center;
+        }
+
+        .section {
+            margin: 10px;
+            border: 1px solid black;
+            border-radius: 10px;
+            width: 200px;
+            height: 300px;
+            display: inline-block;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .date {
+            font-weight: bold;
+        }
+    </style>
+    -->
 </head>
+
 <body>
     <div id="page">
-        <h1>Crear tarea</h1>
-        <input type="text" id="description" placeholder="Descripción">
-        <input type="date" id="date" placeholder="Fecha">
-        <button id="create-tarea">Crear tarea</button>
+        <h1>Editar tareas</h1>
         <div id="resultados"></div>
+        <button id="edit">Editar tarea</button>
     </div>
     <script>
-        var xhr1 = new XMLHttpRequest();
-            xhr1.open("GET", "http://localhost:3000/tasks", true);
-            xhr1.onreadystatechange = function () {
-                if (xhr1.readyState === 4 && xhr1.status === 200) {
-                    var response = JSON.parse(xhr1.responseText);
-                    console.log(response);
-                    let tareas = "";
-                    for (let i = 0; i < response.data.length; i++) {
-                        tareas += 
-                        '<div class="section"> ' + 
-                            '<span id="' + response.data[i].id + '"></span>' + '<br>' +
-                            '<button class="' + response.data[i].id + '" id="eliminar">Eliminar</button>' + '<br>' +
-                            '<p class="date">' + response.data[i].date  + '</p>' + '<br>' +
-                            '<p class="description">' + response.data[i].description + '</p>' + '<br>' +
-                            '<p class="complete">' + response.data[i].complete + '</p>' + 
-                        '</div>';
-                        
-                    }
-                    document.getElementById("resultados").innerHTML = tareas;
-                    
-                }
-            };
-            xhr1.send();
+        function filterdate(date) {
+            var d = new Date(date);
+            var month = '' + (d.getMonth() + 1);
+            var day = '' + d.getDate();
+            var year = d.getFullYear();
 
-        document.getElementById("create-tarea").addEventListener("click", function () {
-            const description = document.getElementById("description").value;
-            const date = document.getElementById("date").value;
-            var xhr1 = new XMLHttpRequest();
-            xhr1.open("POST", "http://localhost:3000/tasks/", true);
-            xhr1.setRequestHeader("Content-Type", "application/json");
-            xhr1.onreadystatechange = function () {
-                if (xhr1.readyState === 4 && xhr1.status === 200) {
-                    var response = JSON.parse(xhr1.responseText);
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+        let id = new URLSearchParams(window.location.search).get("id");
+        let xhr1 = new XMLHttpRequest();
+        xhr1.open("GET", "http://localhost:3000/tasks/" + id, true);
+        xhr1.onreadystatechange = function () {
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+                let response = JSON.parse(xhr1.responseText);
+                console.log(response);
+                document.getElementById("resultados").innerHTML =
+                '<div class="section"> ' +
+                    '<input type="date" class="date" value="' + filterdate(response.data.date) + '"></input>' + '<br>' +
+                    '<input type="text" class="description" value="' + response.data.description + '"></input>' + '<br>' +
+                    '<p>Completado: </p><input type="checkbox" class="complete" value="' + response.data.complete + '"></input>' +
+                '</div>';
+            }
+        };
+        xhr1.send();
+
+        document.getElementById("edit").addEventListener("click", function () {
+            const description = document.getElementsByClassName("description").value;
+            const date = document.getElementsByClassName("date").value;
+            const complete = document.getElementsByClassName("complete").value;
+            let xhr2 = new XMLHttpRequest();
+            xhr2.open("PUT", "http://localhost:3000/tasks/" + id, true);
+            xhr2.setRequestHeader("Content-Type", "application/json");
+            xhr2.onreadystatechange = function () {
+                if (xhr2.readyState === 4 && xhr2.status === 200) {
+                    let response = JSON.parse(xhr2.responseText);
                     console.log(response);
                     document.getElementById("resultados").textContent = "Response: " + response.msg;
                 }
             };
-            xhr1.send(JSON.stringify({ description, date }));
+            xhr2.send(JSON.stringify({ description, date, complete }));
         });
+
     </script>
 </body>
+
 </html>

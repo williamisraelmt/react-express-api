@@ -43,7 +43,9 @@ app.get('/tasks/:id', async (req: Request, res: Response) => {
 
 app.put('/tasks/:id', async (req: Request, res: Response) => {
   const tasks = await Task.update({
-    complete: false 
+    description: req.body.description,
+    date: new Date(req.body.date),
+    complete: req.body.complete
    }, 
    { 
      where: { id: req.params.id } 

@@ -53,8 +53,8 @@
                     for (let i = 0; i < response.data.length; i++) {
                         tareas += 
                         '<div class="section"> ' + 
-                            '<span id="' + response.data[i].id + '"></span>' + '<br>' +
                             '<button class="' + response.data[i].id + '" id="eliminar">Eliminar</button>' + '<br>' +
+                            '<button class="' + response.data[i].id + '" id="editar">Editar</button>' + '<br>' +
                             '<p class="date">' + response.data[i].date  + '</p>' + '<br>' +
                             '<p class="description">' + response.data[i].description + '</p>' + '<br>' +
                             '<p class="complete">' + response.data[i].complete + '</p>' + 
@@ -71,7 +71,7 @@
         
 
         document.getElementById("resultados").addEventListener("click", function () {
-            if (event.target  && event.target.matches('button')){
+            if (event.target && event.target.id == "eliminar"){
                 const id = event.target.className;
                 const section = event.target.parentElement;
                 var xhr1 = new XMLHttpRequest();
@@ -84,6 +84,9 @@
                     }
                 };
                 xhr1.send();
+            } else if (event.target && event.target.id == "editar"){
+                const id = event.target.className;
+                window.location.href = "editar-tarea.html?id=" + id;
             }
         });
         
@@ -98,7 +101,6 @@
                     console.log(response);
                     document.getElementById("resultados").innerHTML = 
                     '<div class="section">' + 
-                        '<span id="' + response.data.id + '"></span>' + '<br>' +
                         '<p class="date">' + response.data.date  + '</p>' + '<br>' +
                         '<p class="description">' + response.data.description + '</p>' + '<br>' +
                         '<p class="complete">' + response.data.complete + '</p>' + 
