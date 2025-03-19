@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de tareas</title>
-    <!--<style>
+   <style>
         #page {
             text-align: center;
         }
@@ -27,7 +27,6 @@
             font-weight: bold;
         }
     </style>
-    -->
 </head>
 
 <body>
@@ -35,40 +34,45 @@
         <h1>Editar tareas</h1>
         <div id="resultados"></div>
         <button id="edit">Editar tarea</button>
+        <button id="create-task" onclick="window.location.href = 'ver-tareas.html'">ver tareas</button> 
     </div>
     <script>
+
         function filterdate(date) {
-            var d = new Date(date);
-            var month = '' + (d.getMonth() + 1);
-            var day = '' + d.getDate();
-            var year = d.getFullYear();
+            let d = new Date(date);
+            let month = '' + (d.getUTCMonth() + 1);
+            let day = '' + d.getUTCDate() ;
+            let year = d.getUTCFullYear();
 
             if (month.length < 2) month = '0' + month;
             if (day.length < 2) day = '0' + day;
 
             return [year, month, day].join('-');
         }
+
         let id = new URLSearchParams(window.location.search).get("id");
         let xhr1 = new XMLHttpRequest();
         xhr1.open("GET", "http://localhost:3000/tasks/" + id, true);
+        xhr1.setRequestHeader("Content-Type", "application/json");
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
                 let response = JSON.parse(xhr1.responseText);
                 console.log(response);
                 document.getElementById("resultados").innerHTML =
-                '<div class="section"> ' +
-                    '<input type="date" class="date" value="' + filterdate(response.data.date) + '"></input>' + '<br>' +
-                    '<input type="text" class="description" value="' + response.data.description + '"></input>' + '<br>' +
-                    '<p>Completado: </p><input type="checkbox" class="complete" value="' + response.data.complete + '"></input>' +
-                '</div>';
+                `<div class="section">
+                    <input type="date" id="date" value="${filterdate(response.data.date)}"></input> <br>
+                    <input type="text" id="description" value="${response.data.description}"></input> <br>
+                    <p>Completado: </p><input type="checkbox" id="complete"></input>
+                </div>`;
+                document.getElementById("complete").checked = response.data.complete;
             }
         };
         xhr1.send();
 
         document.getElementById("edit").addEventListener("click", function () {
-            const description = document.getElementsByClassName("description").value;
-            const date = document.getElementsByClassName("date").value;
-            const complete = document.getElementsByClassName("complete").value;
+            const description = document.getElementById("description").value;
+            const date = document.getElementById("date").value;
+            const complete = document.getElementById("complete").checked;
             let xhr2 = new XMLHttpRequest();
             xhr2.open("PUT", "http://localhost:3000/tasks/" + id, true);
             xhr2.setRequestHeader("Content-Type", "application/json");

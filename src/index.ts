@@ -32,14 +32,22 @@ app.post('/tasks/', async (req: Request, res: Response) => {
 });
 
 app.get('/tasks/', async (req: Request, res: Response) => {
-  const tasks = await Task.findAll()
+  const tasks = await Task.findAll({
+    order: [
+      ['complete', 'ASC'],
+      ['date', 'DESC']
+    ]
+  })
   res.send({ data : tasks });
 });
 
 app.get('/tasks/:id', async (req: Request, res: Response) => {
   const tasks = await Task.findByPk(req.params.id)
+  
   res.send({ data : tasks });
 });
+
+
 
 app.put('/tasks/:id', async (req: Request, res: Response) => {
   const tasks = await Task.update({
