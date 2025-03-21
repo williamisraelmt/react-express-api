@@ -1,0 +1,90 @@
+body{
+    background-color: azure;
+}
+#page h1 {
+    text-align: center;
+    background-color: black;
+    color: whitesmoke;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    position: relative; 
+    transition: transform 0.3s ease-in-out;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+@keyframes slideInDownCustom {
+    from {
+        transform: translateY(-20px); 
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+#page h1 {
+    animation: slideInDownCustom 0.8s ease-in-out;
+}
+
+
+#page h1:hover {
+    transform: translateY(10px); 
+}
+
+#page{
+    
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 50%;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+#page:hover{
+     box-shadow: 0.2rem 0.7rem 1rem rgba(0, 0, 0, 0.5);
+    background-color: #bbb9b917;
+    
+
+}
+input{
+   
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Times New Roman', Times, serif;
+    
+}
+input:hover {
+  
+    box-shadow: 0.1rem 0.2rem 0.2rem 0.1rem rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-10px); 
+}
+    
+
+button{
+    display: inline-block;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+button:hover {
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(-5px); 
+    box-shadow: 0.1rem 0.2rem 0.2rem 0.1rem rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
