@@ -53,7 +53,14 @@ app.get('/ver-tareas/', async (req: Request, res: Response) => {
   res.render('ver-tareas.html');
 });
 
-// TODO: Aquí deben agregar las demás rutas /crear-tarea/, etc, etc
+app.get('/crear-tarea/', async (req: Request, res: Response) => {
+  res.render('crear-tarea.html');
+});
+
+app.get('/editar-tarea/', async (req: Request, res: Response) => {
+  res.render('editar-tarea.html');
+});
+
 
 /**
  * API se refiere a "application programming interface", generalmente se utiliza este prefijo en las rutas

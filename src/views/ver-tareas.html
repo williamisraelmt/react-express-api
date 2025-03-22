@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="ver-tareas.css">
+    <link type="text/css" rel="stylesheet" href="/static/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/ver-tareas.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="/static/bootstrap.min.js"></script>
     <title>Gestor de tareas</title>
 </head>
 <body>
-    <div id="page">
-        <h1>Gestor de tareas</h1>
+    <div id="page" class="container p-5">
+        <h1 class="text-center">Gestor de tareas</h1>
         <button id="unfinished-tasks">Ver tareas pendientes</button> 
-        <button id="create-task" onclick="window.location.href = 'crear-tarea.html'">crear tarea</button> 
+        <button id="create-task" onclick="window.location.href = '/crear-tarea/'">Crear tarea</button> 
         <div id="resultados"></div>
-        <button id="create-task" onclick="window.location.href = 'editar-tarea.html'">Actualizar Tarea</button> 
     </div>
     <script>
 
@@ -52,7 +54,7 @@
 
         function drawTasks() {
         let xhr1 = new XMLHttpRequest();
-        xhr1.open("GET", "http://localhost:3000/tasks", true);
+        xhr1.open("GET", "http://localhost:3000/api/tasks", true);
         xhr1.setRequestHeader("Content-Type", "application/json");
         xhr1.onreadystatechange = function () {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
@@ -88,7 +90,7 @@
                 const id = event.target.className;
                 const section = event.target.parentElement;
                 let xhr2 = new XMLHttpRequest();
-                xhr2.open("DELETE", "http://localhost:3000/tasks/" + id, true);
+                xhr2.open("DELETE", "http://localhost:3000/api/tasks/" + id, true);
                 xhr2.setRequestHeader("Content-Type", "application/json");
                 xhr2.onreadystatechange = function () {
                     if (xhr2.readyState === 4 && xhr2.status === 200) {
@@ -100,13 +102,13 @@
                 xhr2.send();
             } else if (event.target && event.target.id == "editar"){
                 const id = event.target.className;
-                window.location.href = "editar-tarea.html?id=" + id;
+                window.location.href = "/editar-tarea/?id=" + id;
             } else if (event.target && event.target.id == "snooze"){
                 const id = event.target.className;
                 const date = new Date(event.target.parentElement.getElementsByClassName("date")[0].innerHTML);
                 date.setDate(date.getDate() + 1);
                 let xhr2 = new XMLHttpRequest();
-                xhr2.open("PUT", "http://localhost:3000/tasks/" + id, true);
+                xhr2.open("PUT", "http://localhost:3000/api/tasks/" + id, true);
                 xhr2.setRequestHeader("Content-Type", "application/json");
                 xhr2.onreadystatechange = function () {
                     if (xhr2.readyState === 4 && xhr2.status === 200) {
@@ -124,7 +126,7 @@
             let button = document.getElementById("button");
 
             let xhr3 = new XMLHttpRequest();
-            xhr3.open("GET", "http://localhost:3000/tasks", true);
+            xhr3.open("GET", "http://localhost:3000/api/tasks", true);
             xhr3.setRequestHeader("Content-Type", "application/json");
             xhr3.onreadystatechange = function () {
             if (xhr3.readyState === 4 && xhr3.status === 200) {
