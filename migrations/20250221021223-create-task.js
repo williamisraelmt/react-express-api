@@ -12,6 +12,8 @@ module.exports = {
       description: Sequelize.STRING,
       date: Sequelize.DATE,
       complete: Sequelize.BOOLEAN,
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
     });
     /**
      * Add altering commands here.

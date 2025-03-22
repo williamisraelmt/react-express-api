@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ver-tareas.css">
+    <title>Gestor de tareas</title>
+</head>
+<body>
+    <div id="page">
+        <h1>Gestor de tareas</h1>
+        <button id="unfinished-tasks">Ver tareas pendientes</button> 
+        <button id="create-task" onclick="window.location.href = 'crear-tarea.html'">crear tarea</button> 
+        <div id="resultados"></div>
+        <button id="create-task" onclick="window.location.href = 'editar-tarea.html'">Actualizar Tarea</button> 
+    </div>
+    <script>
+
+        function filterdate(date) {
+            let d = new Date(date);
+            let month = '' + (d.getUTCMonth() + 1);
+            let day = '' + d.getUTCDate();
+            let year = d.getUTCFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+        function getDaysLeft(date) {
+            let d = new Date(date);
+            let newdate = new Date();
+            let msleft = d-newdate;
+            let expression = "";
+            let daysleft = Math.floor(msleft/(1000*60*60*24));
+            
+            if (daysleft < 0) {
+                return "pasado";
+            } else if (daysleft == 0) {
+                return "hoy";
+            } else if (daysleft == 1) {
+                expression = "día restante";
+            } else {
+                expression = "días restantes";
+            }
+            
+            return daysleft + " " + expression;
+        }
+
+        let clicked = false;
+
+        function drawTasks() {
+        let xhr1 = new XMLHttpRequest();
+        xhr1.open("GET", "http://localhost:3000/tasks", true);
+        xhr1.setRequestHeader("Content-Type", "application/json");
+        xhr1.onreadystatechange = function () {
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+                var response = JSON.parse(xhr1.responseText);
+                console.log(response);
+                let tareas = "";
+                for (let i = 0; i < response.data.length; i++) {
+                    tareas += 
+                    `<div class="section">
+                        <button class="${response.data[i].id}" id="eliminar">Eliminar</button> <br>
+                        <button class="${response.data[i].id}" id="editar">Editar</button> <br>
+                        ${getDaysLeft(response.data[i].date) != "pasado" && response.data[i].complete != true ? 
+                        `<button class="${response.data[i].id}" id="snooze">Posponer 1 día</button> <br>` 
+                        : '<br>'}
+                        <p class="date"> ${filterdate(response.data[i].date)} </p> <br>
+                        <p class="daysleft"> ${getDaysLeft(response.data[i].date)} </p> <br>
+                        <p class="description">${response.data[i].description}</p> <br>
+                        <p class="complete">${response.data[i].complete}</p>
+                    </div>`;
+                    
+                }
+                document.getElementById("resultados").innerHTML = tareas;
+                
+            }
+        };
+        xhr1.send();
+        }
+        
+        drawTasks();
+        
+        document.getElementById("resultados").addEventListener("click", function () {
+            if (event.target && event.target.id == "eliminar"){
+                const id = event.target.className;
+                const section = event.target.parentElement;
+                let xhr2 = new XMLHttpRequest();
+                xhr2.open("DELETE", "http://localhost:3000/tasks/" + id, true);
+                xhr2.setRequestHeader("Content-Type", "application/json");
+                xhr2.onreadystatechange = function () {
+                    if (xhr2.readyState === 4 && xhr2.status === 200) {
+                        let response = JSON.parse(xhr2.responseText);
+                        console.log(response);
+                        section.remove();
+                    }
+                };
+                xhr2.send();
+            } else if (event.target && event.target.id == "editar"){
+                const id = event.target.className;
+                window.location.href = "editar-tarea.html?id=" + id;
+            } else if (event.target && event.target.id == "snooze"){
+                const id = event.target.className;
+                const date = new Date(event.target.parentElement.getElementsByClassName("date")[0].innerHTML);
+                date.setDate(date.getDate() + 1);
+                let xhr2 = new XMLHttpRequest();
+                xhr2.open("PUT", "http://localhost:3000/tasks/" + id, true);
+                xhr2.setRequestHeader("Content-Type", "application/json");
+                xhr2.onreadystatechange = function () {
+                    if (xhr2.readyState === 4 && xhr2.status === 200) {
+                        let response = JSON.parse(xhr2.responseText);
+                        console.log(response);
+                        drawTasks();
+                    }
+                };
+                xhr2.send(JSON.stringify({ date: date }));
+            }
+        });
+
+        document.getElementById("unfinished-tasks").addEventListener("click", function () {
+            clicked = !clicked;
+            let button = document.getElementById("button");
+
+            let xhr3 = new XMLHttpRequest();
+            xhr3.open("GET", "http://localhost:3000/tasks", true);
+            xhr3.setRequestHeader("Content-Type", "application/json");
+            xhr3.onreadystatechange = function () {
+            if (xhr3.readyState === 4 && xhr3.status === 200) {
+                var response = JSON.parse(xhr3.responseText);
+                console.log(response);
+                let tareas = "";
+                if (clicked){
+                    for (let i = 0; i < response.data.length; i++) {
+                        if (response.data[i].complete === false && getDaysLeft(response.data[i].date) != "pasado") {
+                            tareas += 
+                            `<div class="section">
+                                <button class="${response.data[i].id}" id="eliminar">Eliminar</button> <br>
+                                <button class="${response.data[i].id}" id="editar">Editar</button> <br>
+                                ${getDaysLeft(response.data[i].date) != "pasado" && response.data[i].complete != true ? 
+                                `<button class="${response.data[i].id}" id="snooze">Posponer 1 día</button> <br>` 
+                                : '<br>'}
+                                <p class="date"> ${filterdate(response.data[i].date)} </p> <br>
+                                <p class="daysleft"> ${getDaysLeft(response.data[i].date)} </p> <br>
+                                <p class="description">${response.data[i].description}</p> <br>
+                                <p class="complete">${response.data[i].complete}</p>
+                            </div>`;
+                        }
+                    }
+                } else {
+                    for (let i = 0; i < response.data.length; i++) {
+                        tareas += 
+                        `<div class="section">
+                            <button class="${response.data[i].id}" id="eliminar">Eliminar</button> <br>
+                            <button class="${response.data[i].id}" id="editar">Editar</button> <br>
+                            ${getDaysLeft(response.data[i].date) != "pasado" && response.data[i].complete != true ? 
+                            `<button class="${response.data[i].id}" id="snooze">Posponer 1 día</button> <br>` 
+                            : '<br>'}
+                            <p class="date"> ${filterdate(response.data[i].date)} </p> <br>
+                            <p class="daysleft"> ${getDaysLeft(response.data[i].date)} </p> <br>
+                            <p class="description">${response.data[i].description}</p> <br>
+                            <p class="complete">${response.data[i].complete}</p>
+                        </div>`;
+                    }
+                }
+
+                document.getElementById("resultados").innerHTML = tareas;
+                    
+                }
+            };
+            xhr3.send();
+        });
+        
+    </script>
+</body>
+</html>

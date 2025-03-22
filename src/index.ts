@@ -7,6 +7,7 @@ const app: Express = express();
 const port = 3000;
 
 app.use(cors<Request>());
+app.use(express.json()); 
 
 const sequelize = new Sequelize({
   dialect: 'mysql',
@@ -23,26 +24,36 @@ const sequelize = new Sequelize({
 
 app.post('/tasks/', async (req: Request, res: Response) => {
   await Task.create({
-    description: 'blablablabla',
-    date: new Date(),
-    complete: true,
+    description: req.body.description,
+    date: new Date(req.body.date),
+    complete: false,
   })
   res.send({ msg : 'inserted' });
 });
 
 app.get('/tasks/', async (req: Request, res: Response) => {
-  const tasks = await Task.findAll()
+  const tasks = await Task.findAll({
+    order: [
+      ['complete', 'ASC'],
+      ['date', 'DESC']
+    ]
+  })
   res.send({ data : tasks });
 });
 
 app.get('/tasks/:id', async (req: Request, res: Response) => {
   const tasks = await Task.findByPk(req.params.id)
+  
   res.send({ data : tasks });
 });
 
+
+
 app.put('/tasks/:id', async (req: Request, res: Response) => {
   const tasks = await Task.update({
-    complete: false 
+    description: req.body.description,
+    date: new Date(req.body.date),
+    complete: req.body.complete
    }, 
    { 
      where: { id: req.params.id } 
