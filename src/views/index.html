@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de tareas</title>
+    <!-- Copiar esto en los archivos .html para incluir bootstrap -->
+    <link type="text/css" rel="stylesheet" href="static/bootstrap.min.css">
+    <script src="static/bootstrap.min.js"></script>
+    <!-- Copiar esto en los archivos .html para incluir bootstrap -->
+</head>
+<body>
+    <div class="container p-5">
+        <ul class="list-group">
+            <li class="list-group-item" role="button" id="ver-tareas">Ir al sitio de ver tareas</li>
+            <li class="list-group-item" role="button" id="crear-tarea">Ir al sitio de crear tareas</li>
+        </ul>
+    </div>
+    <script>
+        document.getElementById("ver-tareas").addEventListener("click", function () {
+            window.location.href = "/ver-tareas/";
+        });
+        document.getElementById("crear-tarea").addEventListener("click", function () {
+            window.location.href = "/crear-tarea/"; // Deben de crear esta ruta, ya que solo creé "ver-tareas"
+        });
+    </script>
+</body>
+</html>
