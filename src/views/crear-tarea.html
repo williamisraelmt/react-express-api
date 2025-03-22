@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="/static/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="/static/crear-tarea.css">
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <script src="/static/bootstrap.min.js"></script>
     <title>Gestor de tareas</title>
@@ -26,7 +25,7 @@
             const description = document.getElementById("description").value;
             const date = document.getElementById("date").value;
             var xhr1 = new XMLHttpRequest();
-            xhr1.open("POST", "http://localhost:3000/tasks/", true);
+            xhr1.open("POST", "http://localhost:3000/api/tasks/", true);
             xhr1.setRequestHeader("Content-Type", "application/json");
             xhr1.onreadystatechange = function () {
                 if (xhr1.readyState === 4 && xhr1.status === 200) {

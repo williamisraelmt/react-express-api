@@ -75,15 +75,6 @@ app.post('/api/tasks/', async (req: Request, res: Response) => {
   res.send({ msg : 'inserted' });
 });
 
-app.post('/api/tasks/', async (req: Request, res: Response) => {
-  await Task.create({
-    description: req.body.description,
-    date: new Date(req.body.date),
-    complete: false,
-  })
-  res.send({ msg : 'inserted' });
-});
-
 app.get('/api/tasks/', async (req: Request, res: Response) => {
   const tasks = await Task.findAll({
     order: [
