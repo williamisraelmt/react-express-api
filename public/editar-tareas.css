@@ -88,3 +88,16 @@ button:hover {
     box-shadow: 0.1rem 0.2rem 0.2rem 0.1rem rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
+
+#header{
+    width: 100%;
+    background-color: rgb(144, 95, 196);
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 5px;
+}
+
+.titulo{
+    margin-left: 20px;
+}
