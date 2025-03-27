@@ -32,7 +32,7 @@ const sequelize = new Sequelize({
   dialect: 'mysql',
   database: 'tareas',
   username: 'root',
-  password: '212121',
+  password: 'Root1234',
   host: 'localhost',
   port: 3306,
   models: [Task],

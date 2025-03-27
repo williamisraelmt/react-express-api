@@ -70,7 +70,8 @@ input:hover {
     transition: transform 0.3s ease-in-out;
     transform: translateX(-10px); 
 }
-    
+
+
 
 button{
     display: inline-block;
@@ -89,6 +90,7 @@ button:hover {
     cursor: pointer;
 }
 
+
 #header{
     width: 100%;
     background-color: rgb(144, 95, 196);
@@ -101,3 +103,4 @@ button:hover {
 .titulo{
     margin-left: 20px;
 }
+
