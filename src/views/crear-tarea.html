@@ -13,20 +13,39 @@
     <div id="header">
         <img src="/static/images/logo.png" height="50">
         <h1 class="titulo">My Little Task</h1>
+        <button id="view-task" onclick="window.location.href = '/ver-tareas/'">Ver tareas</button> 
+        <button id="create-task" onclick="window.location.href = '/'">Inicio</button>
+
     </div>
     <div id="page">
         <h1>Crear tarea</h1>
-        <input type="text" id="description" placeholder="Descripción">
-        <input type="date" id="date" placeholder="Fecha">
-        <button id="create-tarea">Crear tarea</button>
+        <form id="task">
+            <input type="text" id="description" placeholder="Descripción" required>
+            <input type="date" id="date" placeholder="Fecha" required>
+            <button type="submit" id="create-tarea">Crear tarea</button>
+        </form>
         <br>
-        <button id="view-task" onclick="window.location.href = '/ver-tareas/'">ver tareas</button> 
         <div id="resultados"></div>
      
         
     </div>
     <script>
-        document.getElementById("create-tarea").addEventListener("click", function () {
+        function filterdate(date) {
+            let d = new Date(date);
+            let month = '' + (d.getUTCMonth() + 1);
+            let day = '' + d.getUTCDate();
+            let year = d.getUTCFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+        document.getElementById("date").value = filterdate(new Date());
+
+        document.getElementById("task").addEventListener("submit", function(e) {
+            e.preventDefault();
             const description = document.getElementById("description").value;
             const date = document.getElementById("date").value;
             var xhr1 = new XMLHttpRequest();
@@ -36,7 +55,11 @@
                 if (xhr1.readyState === 4 && xhr1.status === 200) {
                     var response = JSON.parse(xhr1.responseText);
                     console.log(response);
-                    document.getElementById("resultados").textContent = "Response: " + response.msg;
+                    if (response.msg == 'inserted'){
+                        document.getElementById("resultados").textContent = "Tarea creada";
+                    } setTimeout(() => {
+                         document.getElementById("resultados").textContent = "";
+                    }, 2000);
                 }
             };
             xhr1.send(JSON.stringify({ description, date }));

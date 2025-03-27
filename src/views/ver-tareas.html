@@ -13,11 +13,12 @@
     <div id="header">
         <img src="/static/images/logo.png" height="50">
         <h1 class="titulo">My Little Task</h1>
+        <button id="create-task" onclick="window.location.href = '/crear-tarea/'">Crear tarea</button>
+        <button id="create-task" onclick="window.location.href = '/'">Inicio</button>
     </div>
     <div id="page" class="container p-5">
         <h1 class="text-center">Gestor de tareas</h1>
         <button id="unfinished-tasks">Ver tareas pendientes</button> 
-        <button id="create-task" onclick="window.location.href = '/crear-tarea/'">Crear tarea</button> 
         <div id="resultados"></div>
     </div>
     <script>
@@ -39,7 +40,7 @@
             let newdate = new Date();
             let msleft = d-newdate;
             let expression = "";
-            let daysleft = Math.floor(msleft/(1000*60*60*24));
+            let daysleft = Math.floor(msleft/(1000*60*60*24) + 1);
             
             if (daysleft < 0) {
                 return "pasado";
@@ -76,7 +77,7 @@
                         <p class="date"> ${filterdate(response.data[i].date)} </p> <br>
                         <p class="daysleft"> ${getDaysLeft(response.data[i].date)} </p> <br>
                         <p class="description">${response.data[i].description}</p> <br>
-                        <p class="complete">${response.data[i].complete}</p>
+                        <p class="complete">${response.data[i].complete == true ? "Completado" : "No completado"}</p>
                     </div>`;
                     
                 }

@@ -16,12 +16,16 @@
     <div id="header">
         <img src="/static/images/logo.png" height="50">
         <h1 class="titulo">My Little Task</h1>
+        <button id="create-task" onclick="window.location.href = '/ver-tareas/'">Ver tareas</button> 
+        <button id="create-task" onclick="window.location.href = '/crear-tarea/'">Crear tarea</button>
+        <button id="create-task" onclick="window.location.href = '/'">Inicio</button>
+
     </div>
     <div id="page">
         <h1>Editar tareas</h1>
         <div id="resultados"></div>
         <button id="edit">Editar tarea</button>
-        <button id="create-task" onclick="window.location.href = '/ver-tareas/'">ver tareas</button> 
+        <div id="resultadoss"></div>
     </div>
     <script>
 
@@ -46,7 +50,7 @@
                 let response = JSON.parse(xhr1.responseText);
                 console.log(response);
                 document.getElementById("resultados").innerHTML =
-                `<div class="section">
+                `<div class="section"> 
                     <input type="date" id="date" value="${filterdate(response.data.date)}"></input> <br>
                     <input type="text" id="description" value="${response.data.description}"></input> <br>
                     <p>Completado: </p><input type="checkbox" id="complete"></input>
@@ -67,7 +71,11 @@
                 if (xhr2.readyState === 4 && xhr2.status === 200) {
                     let response = JSON.parse(xhr2.responseText);
                     console.log(response);
-                    document.getElementById("resultados").textContent = "Response: " + response.msg;
+                    if (response.msg == 'actualizado'){
+                        document.getElementById("resultadoss").textContent = "Tarea Editada";
+                    } setTimeout(() => {
+                         document.getElementById("resultadoss").textContent = "";
+                    }, 2000);
                 }
             };
             xhr2.send(JSON.stringify({ description, date, complete }));

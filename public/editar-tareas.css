@@ -63,13 +63,7 @@ input{
     font-family: 'Times New Roman', Times, serif;
     
 }
-input:hover {
-  
-    box-shadow: 0.1rem 0.2rem 0.2rem 0.1rem rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-    transform: translateX(-10px); 
-}
+
 
 
 
