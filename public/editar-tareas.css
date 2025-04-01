@@ -92,9 +92,20 @@ button:hover {
     justify-content: left;
     align-items: center;
     padding: 5px;
+
+    
 }
+ #header button{
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 10px;
+    margin: 10px;
+ }
 
 .titulo{
     margin-left: 20px;
+}
+
+#resultados input{
+margin:10px;
 }
 

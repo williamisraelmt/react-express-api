@@ -10,6 +10,7 @@ body{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     position: relative; 
     transition: transform 0.3s ease-in-out;
+    margin-bottom: 20px;
     font-family: 'Cursive';
 }
 
@@ -79,7 +80,7 @@ button{
     border-radius: 10px;
     border: 1px solid #ccc;
     box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 button:hover {
@@ -96,7 +97,20 @@ button:hover {
     justify-content: left;
     align-items: center;
     padding: 5px;
+
 }
+#header button{
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 10px;
+    margin:10px;
+}
+
+#task button{
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
 
 .titulo{
     margin-left: 20px;
