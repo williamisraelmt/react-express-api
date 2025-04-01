@@ -10,7 +10,7 @@ body{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     position: relative; 
     transition: transform 0.3s ease-in-out;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Cursive';
 }
 
 #resultados{
@@ -22,8 +22,8 @@ body{
 
 .section {
     display: flex;
-    flex-direction: column;  
-    background-color: #3333334b;
+    flex-direction: column-reverse;  
+    background-color: #550f5d4b;
     width:  30%; 
     min-width: 280px; 
     border-radius: 15px; 
@@ -43,8 +43,8 @@ body{
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
 }
 .section p {
-    background: linear-gradient(135deg, #8be8e5, #64b3f4); 
-    color: #333; 
+    background: linear-gradient(135deg, #ae66e2, #ae66e2); 
+    color: #333333; 
     padding: 12px;
     border-radius: 8px; 
     font-size: 16px;
@@ -126,7 +126,7 @@ button{
     border-radius: 10px;
     border: 1px solid #ccc;
     box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family:  'Times New Roman', Times, serif;
 }
 
 button:hover {

@@ -10,7 +10,7 @@ body{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     position: relative; 
     transition: transform 0.3s ease-in-out;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'cursive';
 }
 
 @keyframes slideInDownCustom {
@@ -60,7 +60,7 @@ input{
     border-radius: 10px;
     border: 1px solid #ccc;
     box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
-    font-family: 'Times New Roman', Times, serif;
+    font-family:  'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     
 }
 
