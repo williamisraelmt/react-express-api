@@ -23,7 +23,7 @@ body{
 .section {
     display: flex;
     flex-direction: column-reverse;  
-    background-color: #550f5d4b;
+    background-color: #535353;
     width:  30%; 
     min-width: 280px; 
     border-radius: 15px; 
@@ -43,7 +43,7 @@ body{
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
 }
 .section p {
-    background: linear-gradient(135deg, #ae66e2, #ae66e2); 
+    background: white; 
     color: #333333; 
     padding: 12px;
     border-radius: 8px; 
@@ -138,7 +138,7 @@ button:hover {
 
 #header{
     width: 100%;
-    background-color: rgb(144, 95, 196);
+    background-color: rgb(120, 95, 196);
     display: flex;
     justify-content: left;
     align-items: center;

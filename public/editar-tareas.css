@@ -87,7 +87,7 @@ button:hover {
 
 #header{
     width: 100%;
-    background-color: rgb(144, 95, 196);
+    background-color: rgb(120, 95, 196);
     display: flex;
     justify-content: left;
     align-items: center;
